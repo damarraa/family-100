@@ -11,6 +11,7 @@ use Livewire\Attributes\Layout;
 class GameControl extends Component
 {
     public ?GameSession $session = null;
+    public $search = '';
 
     public function startGame(int $questionId, GameService $gameService)
     {

@@ -1,67 +1,133 @@
-<div wire:poll.visible.750ms
-    class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex flex-col items-center justify-center px-8 py-6 text-white">
+<div wire:poll.500ms class="h-screen w-screen bg-slate-900 overflow-hidden relative font-sans select-none">
 
-    @if($question)
-        <div class="w-full max-w-6xl text-center mb-10">
-            <h1
-                class="text-4xl md:text-6xl font-extrabold tracking-wide text-yellow-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
-                {{ $question->question }}
-            </h1>
-        </div>
+    {{-- BACKGROUND --}}
+    <div class="absolute inset-0 bg-gradient-to-b from-blue-950 via-slate-900 to-black"></div>
+    <div class="absolute inset-0 opacity-20"
+        style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;">
+    </div>
 
-        <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6">
-            @foreach($question->answers as $index => $answer)
-                <div class="relative h-28 rounded-2xl border-4 shadow-2xl overflow-hidden flex items-center
-                                {{ $answer->is_revealed
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 border-green-300'
-                    : 'bg-slate-800 border-slate-600'
-                                }}">
+    {{-- MAIN GRID LAYOUT --}}
+    <div
+        class="relative z-10 h-full w-full max-w-[1920px] mx-auto grid grid-rows-[auto_1fr_auto] p-4 md:p-8 gap-4 md:gap-6">
 
-                    @if($answer->is_revealed)
-                        <div class="flex-grow px-6">
-                            <span class="text-2xl md:text-3xl font-bold uppercase tracking-wider drop-shadow">
-                                {{ $answer->answer_text }}
-                            </span>
-                        </div>
-
-                        <div class="w-24 h-full bg-black/40 flex items-center justify-center border-l-2 border-white/30">
-                            <span class="text-4xl font-mono font-extrabold text-yellow-300">
-                                {{ $answer->point }}
-                            </span>
-                        </div>
-                    @else
-                        <div class="w-full h-full flex items-center justify-center">
-                            <div
-                                class="w-16 h-16 rounded-full bg-slate-700 border-4 border-slate-500 flex items-center justify-center shadow-inner">
-                                <span class="text-2xl font-bold text-slate-200">
-                                    {{ $index + 1 }}
-                                </span>
-                            </div>
-                        </div>
-                    @endif
+        {{-- ================= HEADER (QUESTION) ================= --}}
+        <div class="flex items-center justify-center max-h-[20vh]">
+            @if ($question)
+                <div
+                    class="w-full max-w-6xl bg-blue-900/60 border border-blue-500/50 backdrop-blur-md rounded-2xl md:rounded-full px-6 md:px-10 py-4 shadow-[0_0_30px_rgba(59,130,246,0.3)] text-center">
+                    <h1 class="text-white font-extrabold uppercase leading-tight tracking-wide drop-shadow-lg"
+                        style="font-size: clamp(1.4rem, 3.5vw, 3.2rem);">
+                        {{ $question->question }}
+                    </h1>
                 </div>
-            @endforeach
+            @else
+                <div class="flex flex-col items-center animate-pulse">
+                    <h2
+                        class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 tracking-widest">
+                        MENUNGGU
+                    </h2>
+                    <p class="text-blue-300/80 mt-2 text-xl tracking-wider font-bold">
+                        MODE OPERATOR
+                    </p>
+                </div>
+            @endif
         </div>
 
-        <div
-            class="mt-14 px-10 py-4 rounded-full bg-black/50 border-4 border-yellow-400 shadow-2xl flex items-center gap-6">
-            <span class="text-2xl uppercase tracking-widest text-yellow-300 font-bold">
-                Total Skor
-            </span>
-            <span class="text-6xl font-mono font-extrabold text-white drop-shadow">
-                {{ $currentScore }}
-            </span>
+        {{-- ================= BODY (ANSWERS) ================= --}}
+        <div class="flex items-center justify-center w-full overflow-hidden">
+            @if ($question)
+                <div
+                    class="w-full max-w-7xl h-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-6 place-content-center">
+
+                    @foreach ($question->answers as $answer)
+                        <div class="relative w-full aspect-[6/1] perspective-1000">
+
+                            @if ($answer->is_revealed)
+                                {{-- REVEALED CARD --}}
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-b from-yellow-300 to-yellow-500 border-[3px] border-white rounded-xl shadow-[0_10px_30px_rgba(234,179,8,0.4)] flex items-center justify-between px-6 md:px-8 animate-flip-in overflow-hidden">
+
+                                    <div class="flex-grow flex items-center pr-4">
+                                        <span class="font-black text-slate-900 uppercase leading-none tracking-tight"
+                                            style="font-size: clamp(1.2rem, 2.4vw, 2.4rem);">
+                                            {{ $answer->answer_text }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex-none flex items-center">
+                                        <div class="bg-black text-yellow-400 font-mono font-bold px-4 py-1 rounded-lg border-2 border-yellow-600 shadow-inner min-w-[70px]"
+                                            style="font-size: clamp(1.5rem, 2.8vw, 3rem);">
+                                            {{ $answer->point }}
+                                        </div>
+                                    </div>
+
+                                    <div class="absolute top-0 left-0 w-full h-1/2 bg-white/20"></div>
+                                </div>
+                            @else
+                                {{-- HIDDEN CARD --}}
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-b from-blue-800 to-blue-950 border-[3px] border-blue-500/50 rounded-xl shadow-lg flex items-center justify-center">
+
+                                    <div
+                                        class="aspect-square h-[70%] rounded-full bg-blue-950/50 border-4 border-blue-600/50 flex items-center justify-center shadow-inner">
+                                        <span class="font-black text-blue-400/80"
+                                            style="font-size: clamp(2rem, 4vw, 4rem);">
+                                            {{ $loop->iteration }}
+                                        </span>
+                                    </div>
+
+                                    <div class="absolute inset-x-0 h-[1px] bg-blue-500/20 top-1/2"></div>
+                                </div>
+                            @endif
+
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
 
-    @else
-        <div class="text-center">
-            <h2 class="text-5xl font-extrabold text-yellow-300 animate-pulse">
-                Menunggu Operator
-            </h2>
-            <p class="mt-4 text-xl text-slate-300">
-                Game akan segera dimulai…
-            </p>
-        </div>
-    @endif
+        {{-- ================= FOOTER (SCORE) ================= --}}
+        @if ($question)
+            <div class="flex justify-center items-center pt-2 pb-2">
+                <div
+                    class="relative bg-black border-4 border-yellow-600 rounded-2xl px-10 py-2 shadow-[0_0_50px_rgba(234,179,8,0.25)] flex flex-col items-center overflow-hidden">
 
+                    <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent"></div>
+
+                    <span class="text-yellow-600/80 font-bold text-xs md:text-sm uppercase tracking-[0.5em] mb-1">
+                        Total Score
+                    </span>
+
+                    <span
+                        class="font-mono font-black text-white leading-none tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                        style="font-size: clamp(3rem, 6vw, 6rem);">
+                        {{ str_pad($currentScore, 3, '0', STR_PAD_LEFT) }}
+                    </span>
+                </div>
+            </div>
+        @endif
+    </div>
+
+    {{-- ================= ANIMATION ================= --}}
+    <style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+
+        @keyframes flipIn {
+            0% {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-flip-in {
+            animation: flipIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
 </div>
