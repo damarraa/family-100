@@ -28,15 +28,45 @@ class GameControl extends Component
         }
 
         $answer = Answer::findOrFail($answerId);
-        $gameService->revealAnswer($answer, $this->session);
 
-        $this->session->refresh();
-        // $this->dispatch('answer-revealed');
+        if (!$answer->is_revealed) {
+            $gameService->revealAnswer($answer, $this->session);
+            $this->session->refresh();
+
+            $this->dispatch('play-correct');
+
+            $unrevealed = $this->session->question->answers()->where('is_revealed', false);
+            if ($unrevealed === 0) {
+                $this->dispatch('play-perfect');
+            }
+        }
+    }
+
+    public function addStrike()
+    {
+        if ($this->session && $this->session->strikes < 3) {
+            $this->session->increment('strikes');
+            $this->session->refresh();
+            $this->dispatch('play-wrong');
+        }
+    }
+
+    public function resetStrikes()
+    {
+        if ($this->session) {
+            $this->session->update(['strikes' => 0]);
+            $this->session->refresh();
+        }
     }
 
     public function resetGame(GameService $gameService)
     {
-        $gameService->resetGame($this->session);
+        if ($this->session) {
+            $gameService->resetGame($this->session);
+            $this->session->update(['strikes' => 0]);
+        }
+
+        $this->session = null;
         $this->dispatch('game-reset');
     }
 

@@ -50,6 +50,32 @@
         {{ $slot }}
     </div>
 
+    <audio id="sfx-correct" src="{{ asset('sounds/correct.mp3') }}" preload="auto"></audio>
+    <audio id="sfx-wrong" src="{{ asset('sounds/wrong.mp3') }}" preload="auto"></audio>
+    <audio id="sfx-perfect" src="{{ asset('sounds/perfect.mp3') }}" preload="auto"></audio>
+
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('play-correct', () => {
+                const audio = document.getElementById('sfx-correct');
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            });
+
+            Livewire.on('play-wrong', () => {
+                const audio = document.getElementById('sfx-wrong');
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            });
+
+            Livewire.on('play-perfect', () => {
+                const audio = document.getElementById('sfx-perfect');
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            });
+
+        });
+    </script>
     @livewireScripts
 </body>
 

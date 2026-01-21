@@ -81,15 +81,13 @@
                                     <div>
                                         <h3 class="font-bold text-lg text-gray-800">{{ $q->question }}</h3>
                                         <div class="flex gap-3 mt-1">
-                                            <span
-                                                class="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-medium">
+                                            <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-medium">
                                                 {{ $q->answers->count() }} Jawaban
                                             </span>
                                             @if ($q->is_active)
                                                 <span
                                                     class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold flex items-center gap-1">
-                                                    <span
-                                                        class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
                                                     Terakhir Dimainkan
                                                 </span>
                                             @endif
@@ -97,8 +95,7 @@
                                     </div>
                                 </div>
 
-                                <button wire:click="startGame({{ $q->id }})"
-                                    wire:confirm="Mulai soal ini di layar proyektor?"
+                                <button wire:click="startGame({{ $q->id }})" wire:confirm="Mulai soal ini di layar proyektor?"
                                     class="bg-gray-900 hover:bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg transition-all transform active:scale-95 flex items-center gap-2 whitespace-nowrap">
                                     <span>MULAI GAME</span> ▶
                                 </button>
@@ -119,6 +116,7 @@
 
             @if ($session)
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+
                     <div class="lg:col-span-4 space-y-4">
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
                             <span
@@ -139,6 +137,29 @@
                                     <span class="text-lg">🚪</span>
                                     KEMBALI
                                 </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-red-50 border border-red-100 p-6 rounded-2xl shadow-sm">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Jawaban Salah</span>
+                                <span class="text-xs font-bold text-white bg-red-600 px-3 py-1 rounded-full shadow-sm">
+                                    {{ $session->strikes }} / 3
+                                </span>
+                            </div>
+
+                            <div class="space-y-3">
+                                <button wire:click="addStrike"
+                                    class="w-full bg-red-600 hover:bg-red-700 text-white font-black text-xl py-4 rounded-xl shadow-lg active:scale-95 transition flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                                    <span class="text-2xl">❌</span> TETOT!
+                                </button>
+
+                                @if($session->strikes > 0)
+                                    <button type="button" wire:click="resetStrikes"
+                                        class="w-full text-xs text-red-500 hover:text-red-700 hover:bg-red-100/50 py-2 rounded-lg transition underline decoration-dashed text-center mt-2">
+                                        Reset Tanda Silang (X)
+                                    </button>
+                                @endif
                             </div>
                         </div>
 
@@ -176,54 +197,55 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 @foreach ($session->question->answers as $answer)
                                     @if ($search === '' || stripos($answer->answer_text, $search) !== false)
-                                        <button wire:click="reveal({{ $answer->id }})" wire:loading.attr="disabled"
-                                            @disabled($answer->is_revealed)
-                                            class="relative w-full text-left p-4 rounded-xl border-2 transition-all duration-150 group
-                            {{ $answer->is_revealed
-                                ? 'bg-gray-100 border-gray-200 opacity-50 grayscale cursor-not-allowed'
-                                : 'bg-white border-indigo-100 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1' }}">
+                                                    <button wire:click="reveal({{ $answer->id }})" wire:loading.attr="disabled"
+                                                        @disabled($answer->is_revealed)
+                                                        class="relative w-full text-left p-4 rounded-xl border-2 transition-all duration-150 group
+                                                                                                                                                                                                                            {{ $answer->is_revealed
+                                        ? 'bg-gray-100 border-gray-200 opacity-50 grayscale cursor-not-allowed'
+                                        : 'bg-white border-indigo-100 hover:border-indigo-500 hover:shadow-lg hover:-translate-y-1' }}">
 
-                                            <div class="flex justify-between items-center">
-                                                <div class="flex items-center gap-3">
-                                                    <div
-                                                        class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm
-                                    {{ $answer->is_revealed ? 'bg-gray-300 text-gray-500' : 'bg-indigo-100 text-indigo-700' }}">
-                                                        {{ $loop->iteration }}
-                                                    </div>
-                                                    <span
-                                                        class="font-bold text-gray-800 {{ $answer->is_revealed ? 'line-through' : '' }}">
-                                                        {{ $answer->answer_text }}
-                                                    </span>
-                                                </div>
+                                                        <div class="flex justify-between items-center">
+                                                            <div class="flex items-center gap-3">
+                                                                <div
+                                                                    class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm
+                                                                                                                                                                                                                                    {{ $answer->is_revealed ? 'bg-gray-300 text-gray-500' : 'bg-indigo-100 text-indigo-700' }}">
+                                                                    {{ $loop->iteration }}
+                                                                </div>
+                                                                <span
+                                                                    class="font-bold text-gray-800 {{ $answer->is_revealed ? 'line-through' : '' }}">
+                                                                    {{ $answer->answer_text }}
+                                                                </span>
+                                                            </div>
 
-                                                <span
-                                                    class="font-mono font-bold text-lg {{ $answer->is_revealed ? 'text-gray-400' : 'text-indigo-600' }}">
-                                                    {{ $answer->point }}
-                                                </span>
-                                            </div>
+                                                            <span
+                                                                class="font-mono font-bold text-lg {{ $answer->is_revealed ? 'text-gray-400' : 'text-indigo-600' }}">
+                                                                {{ $answer->point }}
+                                                            </span>
+                                                        </div>
 
-                                            @if ($search !== '' && stripos($answer->answer_text, $search) !== false)
-                                                <div
-                                                    class="absolute -top-2 -right-2 bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-bounce">
-                                                    MATCH!
-                                                </div>
-                                            @endif
+                                                        @if ($search !== '' && stripos($answer->answer_text, $search) !== false)
+                                                            <div
+                                                                class="absolute -top-2 -right-2 bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-bounce">
+                                                                MATCH!
+                                                            </div>
+                                                        @endif
 
-                                            @if ($answer->is_revealed)
-                                                <div class="absolute inset-0 flex items-center justify-center">
-                                                    <span
-                                                        class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded transform -rotate-6 opacity-90">SUDAH
-                                                        TERBUKA</span>
-                                                </div>
-                                            @endif
-                                        </button>
+                                                        @if ($answer->is_revealed)
+                                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                                <span
+                                                                    class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded transform -rotate-6 opacity-90">SUDAH
+                                                                    TERBUKA</span>
+                                                            </div>
+                                                        @endif
+                                                    </button>
                                     @endif
                                 @endforeach
                             </div>
 
                             @if (
-                                $search !== '' &&
-                                    $session->question->answers->filter(fn($a) => stripos($a->answer_text, $search) !== false)->isEmpty())
+                                    $search !== '' &&
+                                    $session->question->answers->filter(fn($a) => stripos($a->answer_text, $search) !== false)->isEmpty()
+                                )
                                 <div class="flex-grow flex flex-col items-center justify-center text-gray-400 py-10">
                                     <span class="text-4xl">🤔</span>
                                     <p class="mt-2 font-medium">Jawaban tidak ditemukan.</p>

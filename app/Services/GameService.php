@@ -68,9 +68,6 @@ class GameService
         DB::transaction(function () use ($session) {
             $session->update(['total_score' => 0]);
             $session->question->answers()->update(['is_revealed' => false]);
-
-            // (Opsional) Hapus log di sesi ini jika dianggap "batal".
-            // $session->gameLogs()->delete(); 
         });
     }
 }

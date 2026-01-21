@@ -17,20 +17,31 @@ class Play extends Component
 
     public function render()
     {
-        $question = Question::where('is_active', true)
-            ->with('answers')
+        $session = GameSession::with([
+            'question.answers' => function ($query) {
+                $query->orderBy('order_rank', 'asc');
+            }
+        ])
+            ->where('status', 'playing')
+            ->latest()
             ->first();
 
-        $session = $question
-            ? GameSession::where('question_id', $question->id)
-                ->where('status', 'playing')
-                ->latest()
-                ->first()
-            : null;
+        $isStrikeOut = false;
+        $isPerfect = false;
+
+        if ($session) {
+            $isStrikeOut = $session->strikes >= 3;
+
+            $unrevealedCount = $session->question->answers->where('is_revealed', false)->count();
+            $isPerfect = $unrevealedCount === 0;
+        }
 
         return view('livewire.game.play', [
-            'question' => $question,
-            'currentScore' => $session?->total_score ?? 0,
+            'gameSession' => $session,
+            'question' => $session ? $session->question : null,
+            'currentScore' => $session ? $session->total_score : 0,
+            'isStrikeOut' => $isStrikeOut,
+            'isPerfect' => $isPerfect,
         ]);
     }
 }

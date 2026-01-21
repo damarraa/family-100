@@ -10,8 +10,8 @@ use Livewire\Component;
 class QuestionIndex extends Component
 {
     public $question_text;
-    public $answers      = [];
-    public $question_id  = null;
+    public $answers = [];
+    public $question_id = null;
     public $is_form_open = false;
 
     public function mount()
@@ -29,8 +29,8 @@ class QuestionIndex extends Component
     public function resetForm()
     {
         $this->question_text = '';
-        $this->question_id   = null;
-        $this->answers       = [];
+        $this->question_id = null;
+        $this->answers = [];
 
         for ($i = 0; $i < 3; $i++) {
             $this->answers[] = ['id' => null, 'text' => '', 'point' => 0];
@@ -58,18 +58,20 @@ class QuestionIndex extends Component
 
     public function edit($id)
     {
-        $q = Question::with(['answers' => function ($query) {
-            $query->orderBy('order_rank', 'asc');
-        }])->findOrFail($id);
+        $q = Question::with([
+            'answers' => function ($query) {
+                $query->orderBy('order_rank', 'asc');
+            }
+        ])->findOrFail($id);
 
-        $this->question_id   = $q->id;
+        $this->question_id = $q->id;
         $this->question_text = $q->question;
 
         $this->answers = [];
         foreach ($q->answers as $ans) {
             $this->answers[] = [
-                'id'    => $ans->id,
-                'text'  => $ans->answer_text,
+                'id' => $ans->id,
+                'text' => $ans->answer_text,
                 'point' => $ans->point,
             ];
         }
@@ -80,8 +82,8 @@ class QuestionIndex extends Component
     public function save()
     {
         $this->validate([
-            'question_text'   => 'required|string|max:255',
-            'answers.*.text'  => 'nullable|string|max:255',
+            'question_text' => 'required|string|max:255',
+            'answers.*.text' => 'nullable|string|max:255',
             'answers.*.point' => 'nullable|integer',
         ]);
 
@@ -110,16 +112,16 @@ class QuestionIndex extends Component
                 if ($existingAnswer) {
                     $existingAnswer->update([
                         'answer_text' => $ans['text'],
-                        'point'       => (int) $ans['point'],
-                        'order_rank'  => $currentRank,
+                        'point' => (int) $ans['point'],
+                        'order_rank' => $currentRank,
                     ]);
                     $keptAnswerIds[] = $ans['id'];
                 }
             } else {
                 $newAnswer = $q->answers()->create([
                     'answer_text' => $ans['text'],
-                    'point'       => (int) $ans['point'],
-                    'order_rank'  => $currentRank,
+                    'point' => (int) $ans['point'],
+                    'order_rank' => $currentRank,
                     'is_revealed' => false,
                 ]);
                 $keptAnswerIds[] = $newAnswer->id;
