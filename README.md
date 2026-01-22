@@ -1,59 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎮 Cerdas Cermat K3 – Family 100 Style
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Web Apps **Cerdas Cermat K3** adalah aplikasi kuis interaktif berbasis web yang dirancang khusus untuk kebutuhan **event, pelatihan, dan sosialisasi K3**, dengan konsep **Dual Screen System** seperti acara *Family 100*.
 
-## About Laravel
+Aplikasi ini memungkinkan **Operator/MC** mengontrol jalannya permainan dari satu layar, sementara **Peserta** melihat tampilan visual yang atraktif dan responsif di layar proyektor atau TV besar.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- 🎥 **Dual Screen System**  
+  - **Layar Operator**: Kontrol soal, buka jawaban, skor, dan efek
+  - **Layar Proyektor**: Tampilan visual untuk peserta (real-time)
 
-## Learning Laravel
+- 📝 **Manajemen Soal Dinamis**  
+  - Jumlah jawaban **tidak dibatasi** (1 – N)
+  - Poin dapat diatur per jawaban
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- 🔍 **Smart Search Jawaban**  
+  - Operator cukup mengetik 3 huruf pertama untuk mencari jawaban peserta
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 🔔 **Sound Effect Interaktif**  
+  - Jawaban benar → *Ding!*  
+  - Jawaban salah → *Tetot!*
 
-## Laravel Sponsors
+- ❌ **Tombol Hukuman (TETOT!)**  
+  - Menampilkan animasi hukuman di layar proyektor
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- 📺 **Mode Proyektor Responsif**  
+  - Optimal untuk layar besar (TV / Proyektor)
+  - Mendukung berbagai rasio layar (16:9, 4:3)
 
-### Premium Partners
+- ⚡ **Real-time Update (Polling)**  
+  - Tidak perlu refresh halaman
+  - Stabil untuk live event
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🧱 Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Laravel 12** – Backend Framework
+- **Laravel Breeze** – Authentication
+- **Livewire** – Reactive UI & real-time interaction
+- **Tailwind CSS** – Styling & responsive design
+- **MySQL** – Database
 
-## Code of Conduct
+---
+<!-- 
+## 🖥️ Cara Menggunakan (Demo)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1️⃣ Layar Operator (Admin / MC)
+Digunakan untuk mengontrol permainan.
 
-## Security Vulnerabilities
+🔗 Link:  
+```
+/login
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+📌 Contoh akun demo:
+```
+Email    : admin@example.com
+Password : password123
+```
 
-## License
+Disarankan menggunakan **Laptop atau HP Operator**. -->
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 2️⃣ Layar Proyektor (Peserta)
+Digunakan sebagai tampilan utama untuk peserta.
+
+🔗 Link:
+```
+/play
+```
+
+📢 Catatan:
+- Aktifkan **audio/speaker** untuk efek suara
+- Tampilan otomatis full screen & responsif
+
+---
+
+## 🔄 Alur Permainan Singkat
+
+1. Operator login ke dashboard
+2. Operator memilih soal
+3. Game dimulai (status: *playing*)
+4. Peserta menyebutkan jawaban
+5. Operator membuka jawaban yang sesuai
+6. Skor otomatis terakumulasi
+7. Game dapat di-reset atau dilanjutkan ke soal berikutnya
+
+---
+
+## 🗂️ Struktur Komponen Utama
+
+```
+app/
+├── Livewire/
+│   ├── Admin/
+│   │   └── QuestionIndex.php
+│   └── Game/
+│       ├── GameControl.php   # Operator Panel
+│       └── Play.php          # Layar Proyektor
+│
+├── Services/
+│   └── GameService.php       # Core game logic & rules
+```
+
+---
+
+## 🔐 Keamanan & Game Rules
+
+- Jawaban yang sudah terbuka **tidak bisa dibuka ulang**
+- Jawaban tidak bisa dibuka jika game belum dimulai
+- Double click dicegah (UI & backend guarded)
+- State game dikontrol di **Service Layer**
+
+---
+
+## 📦 Instalasi Lokal (Development)
+
+```bash
+# Clone repository
+git clone https://github.com/username/cerdas-cermat-k3.git
+
+cd cerdas-cermat-k3
+
+# Install dependencies
+composer install
+npm install
+
+# Copy env
+cp .env.example .env
+
+# Generate key
+php artisan key:generate
+
+# Migrate database
+php artisan migrate --seed
+
+# Run dev server
+php artisan serve
+npm run dev
+```
+
+---
+
+## 🚀 Status Project
+
+✅ **Production Ready**  
+✅ Digunakan untuk event & simulasi  
+✅ Stabil untuk live event
+
+---
+
+## 📄 Lisensi
+
+Project ini dikembangkan untuk kebutuhan internal & event.  
+Penggunaan ulang atau distribusi ulang harap seizin pengembang.
+
+---
+
+## 👨‍💻 Author
+
+**E. Andhika Alfira Damara**  
+Fullstack Developer (Laravel)
+
+---
+
+> "Build for the stage, not just for the screen." 🎤✨
+

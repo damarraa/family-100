@@ -8,6 +8,7 @@
 - **Deadline**: ± 1 minggu
 - **Platform**: Web-based (untuk laptop + proyektor)
 - **Peran Developer**: Fullstack (logic, UI, admin)
+- **Tech Stack**: Laravel 12 + Livewire
 
 ---
 
@@ -62,57 +63,9 @@ Menyediakan aplikasi quiz interaktif bertema **K3** yang dapat digunakan dalam a
 
 # ⚙️ TEKNOLOGI (RENCANA)
 
-- **Backend**: Laravel
+- **Backend**: Laravel 12
 - **Frontend**: Blade + Livewire / Alpine.js
 - **Database**: MySQL
 - **Styling**: Tailwind CSS (opsional)
 
 > Catatan: Dipilih untuk kecepatan development & stabilitas sesuai deadline singkat.
-
----
-
-# 🗓️ ALUR PENGERJAAN (7 HARI)
-
-## Hari 1
-- Dokumentasi & finalisasi scope
-- Desain database
-- Setup project Laravel
-
-## Hari 2
-- CRUD soal & jawaban (Admin)
-- Panel operator dasar
-
-## Hari 3
-- Gameplay utama (reveal jawaban, skor)
-
-## Hari 4
-- Mode presentasi & fullscreen
-- UX flow MC–Operator
-
-## Hari 5
-- Polishing UI
-- (Opsional) Timer & animasi ringan
-
-## Hari 6
-- Testing end-to-end
-- Simulasi quiz
-- Bug fixing
-
-## Hari 7
-- Demo ke klien
-- Minor revisi
-- Finalisasi
-
----
-
-# 📌 OUTPUT YANG DIHARAPKAN
-- Web apps siap digunakan
-- Demo aplikasi untuk klien
-- Aplikasi stabil untuk acara live
-
----
-
-# 🧠 CATATAN PENTING
-- Fokus pada **stabilitas & kemudahan operasional**
-- Hindari fitur berlebihan di awal
-- Operator experience adalah kunci
