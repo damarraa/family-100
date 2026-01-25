@@ -50,7 +50,7 @@
         {{ $slot }}
     </div>
 
-    <audio id="sfx-correct" src="{{ asset('sounds/correct.mp3') }}" preload="auto"></audio>
+    {{-- <audio id="sfx-correct" src="{{ asset('sounds/correct.mp3') }}" preload="auto"></audio>
     <audio id="sfx-wrong" src="{{ asset('sounds/wrong.mp3') }}" preload="auto"></audio>
     <audio id="sfx-perfect" src="{{ asset('sounds/perfect.mp3') }}" preload="auto"></audio>
 
@@ -75,7 +75,7 @@
             });
 
         });
-    </script>
+    </script> --}}
     @livewireScripts
 </body>
 
