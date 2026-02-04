@@ -13,7 +13,23 @@ class Play extends Component
         'game-started' => '$refresh',
         'answer-revealed' => '$refresh',
         'game-reset' => '$refresh',
+        'strikesReset' => '$refresh'
     ];
+
+    public function reloadSession()
+    {
+        $session = GameSession::where('status', 'playing')
+            ->latest()
+            ->first();
+
+        if ($session) {
+            $session->update([
+                'strikes' => 0,
+            ]);
+        }
+
+        $this->dispatch('$refresh');
+    }
 
     public function render()
     {

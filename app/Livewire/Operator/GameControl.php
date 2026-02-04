@@ -54,9 +54,13 @@ class GameControl extends Component
     public function resetStrikes()
     {
         if ($this->session) {
-            $this->session->update(['strikes' => 0]);
+            $this->session->strikes = 0;
+            $this->session->save();
+
             $this->session->refresh();
         }
+
+        $this->dispatch('strikesReset');
     }
 
     public function resetGame(GameService $gameService)
